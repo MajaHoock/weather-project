@@ -16,6 +16,7 @@ body {
   border: solid;
   border-color: #07689f;
   border-radius: 10px;
+  z-index: -1;
 }
 
 h1 {
@@ -221,4 +222,15 @@ li {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.footer {
+}
+
+.githubLink {
+  display: flex;
+  font-size: 22px;
+  color: #07689f;
+  display: block;
+  text-align: center;
 }
