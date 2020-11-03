@@ -1,27 +1,206 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
+    <script src="https://kit.fontawesome.com/fa71fea69d.js" crossorigin="anonymous"></script>
+    <title>Weather App</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>GitHub repo example</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <link href="src/styles.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans&display=swap" rel="stylesheet" />
 </head>
 
 <body>
     <div class="container">
-        <h1>
-            Hosted with
-            <a href="https://www.netlify.com">Netlify</a>
-        </h1>
-        <a href="mailto:matt@delac.io" class="btn btn-primary contact-btn">Contact me</a>
-        <img src="https://paper-attachments.dropbox.com/s_E2839E24FC7F0728D4D3F0A165AC8F6358478DD8AAADC3C02AA1B3047CC41EA8_1560193451463_image.png"
-            alt="" />
+        <div class="image"></div>
+        <div class="row">
+            <div class="col-3">
+                <h1 id="london"><button class="header-buttons"><strong>LONDON</strong></button></h1>
+            </div>
+            <div class="col-3">
+                <h1 id="tokyo"><button class="header-buttons"><strong>TOKYO</strong></button></h1>
+            </div>
+            <div class="col-3">
+                <h1 id="bamberg"><button class="header-buttons"><strong>BAMBERG</strong></button></h1>
+            </div>
+            <div class="col-3">
+                <h1 id="tallinn"><button class="header-buttons"><strong>TALLINN</strong></button></h1>
+            </div>
+        </div>
+        <hr>
+        <div class="place-weather">
+            <h2></h2>
+            <h3>
+                <div class="description" id="temperature-description"></div>
+            </h3>
+            <h4>
+                <span class="sunemoji" id="header-emoji">
+                    <i class="fas fa-sun"></i>
+
+                </span>
+                <span class="temperature" id="temperature-id"></span>
+                <span class="units">
+                    <sup>
+                        <a href="#" id="celsius-link">°C</a> |
+                        <a href="#" id="fahrenheit-link">F°</a>
+                    </sup>
+                </span>
+            </h4>
+        </div>
+        <div class="searching">
+            <form id="search-form">
+                <button id="location-button-id" class="location-button" title="Current Location"><i
+                        class="fas fa-map-pin"></i>
+                </button>
+                <input class="search-field" ; type="Location" placeholder="Location" autocomplete="off" autofocus="on"
+                    id="search-text-input" />
+                <input class="enterField" ; type="submit" value="Search" />
+            </form>
+        </div>
+
+        <div class="lower-side">
+            <div class="list">
+                <ul class="days">
+                    <li class="listRow">
+                        <div class="weekday">
+                            <span class="circle">
+                                <span class="emoji">
+                                    <i class="fas fa-wind"></i>
+                                </span>
+                                <strong>Mo</strong>
+                                <div>
+                                    10°
+                                    <i class="fas fa-thermometer-three-quarters"></i>
+                                </div>
+                            </span>
+                        </div>
+                        <span class="activity">
+                            Kite Rise
+                        </span>
+                    </li>
+                    <li class="listRow">
+                        <div class="weekday">
+                            <span class="circle">
+                                <i class="fas fa-sun"></i>
+                                <strong>Tue</strong>
+                                <div>
+                                    12°
+                                    <i class="fas fa-thermometer-three-quarters"></i>
+                                </div>
+                            </span>
+                        </div>
+                        <span class="activity">
+                            Hiking
+                        </span>
+                    </li>
+                    <li class="listRow">
+                        <div class="weekday">
+                            <span class="circle">
+                                <i class="fas fa-cloud-showers-heavy"></i>
+                                <strong>Wed</strong>
+                                <div>
+                                    5°
+                                    <i class="fas fa-thermometer-three-quarters"></i>
+                                </div>
+                            </span>
+                        </div>
+                        <span class="activity">
+                            Cinema
+                        </span>
+                    </li>
+                    <li class="listRow">
+                        <div class="weekday">
+                            <span class="circle">
+                                <i class="fas fa-snowflake"></i>
+                                <strong>Thu</strong>
+                                <div>
+                                    0°
+                                    <i class="fas fa-thermometer-three-quarters"></i>
+                                </div>
+                            </span>
+
+                        </div>
+                        <span class="activity">
+                            Sledging
+                        </span>
+                    </li>
+                    <li class="listRow">
+                        <div class="weekday">
+                            <span class="circle">
+                                <i class="fas fa-icicles"></i>
+                                <strong>Fri</strong>
+                                <div>
+                                    -2°
+                                    <i class="fas fa-thermometer-three-quarters"></i>
+                                </div>
+                            </span>
+
+                        </div>
+                        <span class="activity">
+                            Ice Skating
+                        </span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="conditions">
+                <ul>
+                    <li>
+                        <h5 class="today">
+                            Sunday, 29.10.2020
+                        </h5>
+                    </li>
+                    <hr />
+                    <li>
+                        <strong> <i class="fas fa-cloud-showers-heavy"></i> Precip:</strong>
+                        <span class="precip" id="precip">
+                        </span> %
+                    </li>
+                    <li> <strong> <i class="fas fa-wind"></i> Wind:</strong>
+                        <span class="wind" id="wind"></span>
+                        km/h</li>
+                    </li>
+                    <li> <strong> <i class="fas fa-tint"></i> Humidity:</strong>
+                        <span class="humidity" id="humidity">
+                        </span>
+                        %
+                    </li>
+                </ul>
+            </div>
+
+            <div class="todays-activities">
+                <li>
+                    <div class="header-activity">
+                        Perfect weather for
+                    </div>
+                    <hr />
+                </li>
+                <li>
+                    <span id="first-activity">
+                        <i class="fas fa-hiking"></i>
+                        Hiking
+                    </span>
+                </li>
+                <li>
+                    <span id="second-activity">
+                        <i class="fas fa-biking"></i>
+                        Bike tours</li>
+                </span>
+                </li>
+                <li>
+                    <span id="third-activity">
+                        <i class="fas fa-tree"></i>
+                        Visit a park
+                    </span>
+                </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <script src="script.js"></script>
+    <script src="src/index.js"></script>
 </body>
 
 </html>
