@@ -1,4 +1,4 @@
-// querySelecotr also alle HTMLs die verändern werden können
+// querySelector also alle HTMLs die verändern werden können
 
 
 
@@ -50,13 +50,16 @@ function weatherDataBasedOnLatLon(response) {
 
 function iconChangeHandler(description) {
 let weatherIcon = document.getElementById("header-emoji");
-  if (description.toLowerCase() === "clear sky") {
+  if (description.toLowerCase() === "clear sky" && hours > 17) {
+    weatherIcon.innerHTML = `<i class="fas fa-moon"></i>`
+  }
+    if (description.toLowerCase() === "clear sky" && hours < 17) {
     weatherIcon.innerHTML = `<i class="fas fa-sun"></i>`
   }
   if(description.toLowerCase() === "scattered clouds" || description.toLowerCase() === "few clouds") {
     weatherIcon.innerHTML = `<i class="fas fa-cloud-sun"></i>`    
   }
- if(description.toLowerCase() === "broken clouds" || description.toLowerCase() === "overcast clouds") {
+  if(description.toLowerCase() === "broken clouds" || description.toLowerCase() === "overcast clouds") {
     weatherIcon.innerHTML = `<i class="fas fa-cloud"></i>`
   }
   if(description.toLowerCase() === "mist" || description.toLowerCase() === "fog" || description.toLowerCase() === "squalls") {
@@ -68,11 +71,11 @@ let weatherIcon = document.getElementById("header-emoji");
    if(description.toLowerCase() === "thunderstorm with light rain" || description.toLowerCase() === "thunderstorm with rain" || description.toLowerCase() === "thunderstorm with heavy rain"  || description.toLowerCase() === "light thunderstorm"  || description.toLowerCase() === "thunderstorm"  || description.toLowerCase() === "heavy thunderstorm" || description.toLowerCase() === "ragged thunderstorm"  || description.toLowerCase() === "thunderstorm with drizzle"  || description.toLowerCase() === "thunderstorm with light drizzle"  || description.toLowerCase() === "thunderstorm with heavy drizzle") {
     weatherIcon.innerHTML = `<i class="fas fa-bolt"></i>`
   }
-if (description.toLowerCase() === "light rain" || description.toLowerCase() === "moderate rain") {
+  if (description.toLowerCase() === "light rain" || description.toLowerCase() === "moderate rain") {
     weatherIcon.innerHTML = `<i class="fas fa-cloud-rain"></i>`
   }
-   if (description.toLowerCase() === "heavy intensity rain" || description.toLowerCase() === "very heavy rain" || description.toLowerCase() === "extreme rain" || description.toLowerCase() === "light intensity shower rain" || description.toLowerCase() === "shower rain" || description.toLowerCase() === "heavy intensity shower rain" || description.toLowerCase() === "ragged shower rain"){
- weatherIcon.innerHTML = `<i class="fas fa-cloud-showers-heavy"></i>`
+  if (description.toLowerCase() === "heavy intensity rain" || description.toLowerCase() === "very heavy rain" || description.toLowerCase() === "extreme rain" || description.toLowerCase() === "light intensity shower rain" || description.toLowerCase() === "shower rain" || description.toLowerCase() === "heavy intensity shower rain" || description.toLowerCase() === "ragged shower rain"){
+    weatherIcon.innerHTML = `<i class="fas fa-cloud-showers-heavy"></i>`
   }
 }
 
@@ -84,7 +87,6 @@ function getCurrentPosition(event) {
 } 
 
 let locationButton = document.getElementById("location-button-id");
-
 locationButton.addEventListener("click", getCurrentPosition);
 
 let apiKey = "253bd9295ef9652dbc68aaa1df131546";
@@ -93,10 +95,12 @@ let apiKey = "253bd9295ef9652dbc68aaa1df131546";
 function showTemperature(response) {
   console.log("showTemperature response: ", response)
   document.querySelector("h2").innerHTML =  response.data.name;
+
   let description =  response.data.weather[0].description;
   let temperature = Math.round(response.data.main.temp);
   let temperatureElement = document.getElementById("temperature-id");
   let descriptionElement = document.querySelector("#temperature-description");
+
   temperatureElement.innerHTML = `${temperature}`;
   descriptionElement.innerHTML = description;
   iconChangeHandler(description);
@@ -133,21 +137,40 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", convertToCelsius);
 
 
-function search(event) {
+function search(event) 
+{
   event.preventDefault();
   let searchInput = document.querySelector("#search-text-input");
   let h2 = document.querySelector("h2");
-  if (searchInput.value) {
+  if (searchInput.value) 
+    {
   h2.innerHTML = `${searchInput.value}`.toUpperCase();
   let city = searchInput.value
-  getWeatherData(city); 
+  console.log("test", city)
   console.log(city)
-} else {
+  getWeatherData(city); 
+  
+    } 
+else 
+    {
   alert ("Enter a city");
+    }
 }
-}
+
+
 let form = document.querySelector("#search-form");
+let searchInput = document.querySelector("#search-text-input");
+
+
 form.addEventListener("submit", search);
+form.addEventListener("keyup", (event) => {
+  event.preventDefault(); 
+  if (event.Code === "Enter" || event.keyCode === 13) {
+    form.submit();
+
+  }
+}
+);
 
 let now = new Date();
 let h5 = document.querySelector("h5");
@@ -159,7 +182,16 @@ let minutes = now.getMinutes();
 if (minutes < 10) {
   minutes = `0${minutes}`;
 }
-let days = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAYX"];
+let days = 
+[
+  "SUNDAY", 
+  "MONDAY", 
+  "TUESDAY", 
+  "WEDNESDAY", 
+  "THURSDAY", 
+  "FRIDAY", 
+  "SATURDAYX"
+];
 let day = days[now.getDay()];
 
 h5.innerHTML = `${day} ${hours}:${minutes}h`
