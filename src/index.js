@@ -56,8 +56,11 @@ let weatherIcon = document.getElementById("header-emoji");
     if (description.toLowerCase() === "clear sky" && hours < 17) {
     weatherIcon.innerHTML = `<i class="fas fa-sun"></i>`
   }
-  if(description.toLowerCase() === "scattered clouds" || description.toLowerCase() === "few clouds") {
+  if(description.toLowerCase() === "scattered clouds" || description.toLowerCase() === "few clouds" && hours < 17) {
     weatherIcon.innerHTML = `<i class="fas fa-cloud-sun"></i>`    
+  }
+  if(description.toLowerCase() === "scattered clouds" || description.toLowerCase() === "few clouds" && hours > 17) {
+    weatherIcon.innerHTML = `  <i class="fas fa-cloud-moon"></i>`    
   }
   if(description.toLowerCase() === "broken clouds" || description.toLowerCase() === "overcast clouds") {
     weatherIcon.innerHTML = `<i class="fas fa-cloud"></i>`
