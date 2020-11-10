@@ -172,14 +172,6 @@ let searchInput = document.querySelector("#search-text-input");
 
 
 form.addEventListener("submit", search);
-form.addEventListener("keyup", (event) => {
-  event.preventDefault(); 
-  if (event.Code === "Enter" || event.keyCode === 13) {
-    form.submit();
-
-  }
-}
-);
 
 let now = new Date();
 let h5 = document.querySelector("h5");
