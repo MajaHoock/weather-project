@@ -38,14 +38,14 @@ function weatherDataBasedOnLatLon(response) {
   let temperature = document.getElementById("temperature-id");
   let temperatureDescription = document.getElementById("temperature-description");
 
-  console.log(response, temperature);
   locationNameH2.innerHTML = response.data.name;
   temperature.innerHTML = Math.round(response.data.main.temp);
   temperatureDescription.innerHTML = description;
   iconChangeHandler(description);
-
+  console.log(response)
   document.getElementById("humidity").innerHTML = response.data.main.humidity;
   document.getElementById("wind").innerHTML = Math.round(response.data.wind.speed);
+  //document.getElementById("precipitation").innerHTML = response.data.precipitation.mode;
 }
 
 function iconChangeHandler(description) {
@@ -90,13 +90,13 @@ function getCurrentPosition(event) {
 } 
 
 let locationButton = document.getElementById("location-button-id");
+
 locationButton.addEventListener("click", getCurrentPosition);
 
 let apiKey = "253bd9295ef9652dbc68aaa1df131546";
 
 
 function showTemperature(response) {
-  console.log("showTemperature response: ", response)
   document.querySelector("h2").innerHTML =  response.data.name;
 
   let description =  response.data.weather[0].description;
@@ -107,6 +107,12 @@ function showTemperature(response) {
   temperatureElement.innerHTML = `${temperature}`;
   descriptionElement.innerHTML = description;
   iconChangeHandler(description);
+  console.log(response)
+  document.getElementById("humidity").innerHTML = response.data.main.humidity;
+  document.getElementById("wind").innerHTML = Math.round(response.data.wind.speed);
+  if (response.data.precipitation) {
+    document.getElementById("precip").innerHTML = Math.round(response.data.wind.precipitation);
+  }
 }
 //let city = "London"
 //document.querySelector("h2").innerHTML = city.toUpperCase();
