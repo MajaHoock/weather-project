@@ -1,4 +1,4 @@
-.container,
+.container-main,
 body {
   max-width: 800px;
   height: 1000px;
@@ -30,6 +30,11 @@ h1 {
   text-shadow: 0.5px 0.5px 0.6px #208dcc;
   background-color: rgb(162, 213, 242, 0.1);
   border: 0;
+}
+.location-button {
+  align-self: center;
+  justify-self: center;
+  width: min-content;
 }
 button {
   border-color: rgb(162, 213, 242, 0.1);
@@ -83,13 +88,21 @@ a {
   text-decoration: none;
   color: #ffc93c;
 }
+.col-11 {
+  display: inline-block;
+}
 a:hover {
   color: #07689f;
 }
+.weather-searchbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  margin-bottom: 100px;
+}
 form {
   text-align: center;
-  margin: 40px;
-  position: relative;
   border-radius: 10px;
 }
 .lower-side {

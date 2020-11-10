@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-main">
         <div class="image"></div>
         <div class="row">
             <div class="col-3">
@@ -50,15 +50,17 @@
                 </span>
             </h4>
         </div>
-        <div class="searching">
-            <button type="button" id="location-button-id" class="location-button" title="Current Location">
-                <i class="fas fa-map-pin"></i></button>
+        <div class="container">
+                    <div class="weather-searchbar">
+                    <button type="button" id="location-button-id" class="location-button" title="Current Location">
+                        <i class="fas fa-map-pin"></i></button>
                 <form id="search-form">
                 <input class="search-field" type="Location" placeholder="Location" autocomplete="on" autofocus="on"
                     id="search-text-input" />
                 <input class="enterField" type="submit" value="Search" />
             </form>
         </div>
+    </div>
 
         <div class="lower-side">
             <div class="list">
