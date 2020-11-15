@@ -70,6 +70,7 @@ function weatherDataBasedOnLatLon(response) {
   let locationNameH2 = document.querySelector("h2");
   let temperature = document.getElementById("temperature-id");
   let temperatureDescription = document.getElementById("temperature-description");
+  let precipElement = document.getElementById("precipitation");
 
   locationNameH2.innerHTML = response.data.name;
   temperature.innerHTML = Math.round(response.data.main.temp);
@@ -78,7 +79,14 @@ function weatherDataBasedOnLatLon(response) {
   console.log(response)
   document.getElementById("humidity").innerHTML = response.data.main.humidity;
   document.getElementById("wind").innerHTML = Math.round(response.data.wind.speed);
-  //document.getElementById("precipitation").innerHTML = response.data.precipitation.mode;
+
+  if  (response.data.rain){
+      precipElement.innerHTML = reponse.data.rain["1h"]; 
+  } else {
+     precipElement.innerHTML = 0;
+  }
+  
+  changeCurrentActivity(response)
 }
 
 function iconChangeHandler(description) {
@@ -101,7 +109,7 @@ let weatherIcon = document.getElementById("header-emoji");
   if(description.toLowerCase() === "mist" || description.toLowerCase() === "fog" || description.toLowerCase() === "squalls") {
     weatherIcon.innerHTML = `<i class="fas fa-smog"></i>`
   }
-    if(description.toLowerCase() === "light snow" || description.toLowerCase() === "Snow" || description.toLowerCase() === "Heavy snow"  || description.toLowerCase() === "Sleet"  || description.toLowerCase() === "Shower Sleet"  || description.toLowerCase() === "Light Shower Sleet" || description.toLowerCase() === "Rain and snow"  || description.toLowerCase() === "Light Rain and snow"  || description.toLowerCase() === "Shower snow"  || description.toLowerCase() === "Light shower snow" || description.toLowerCase() === "Heavy shower snow"  || description.toLowerCase() === "freezing rain") {
+  if(description.toLowerCase() === "light snow" || description.toLowerCase() === "Snow" || description.toLowerCase() === "Heavy snow"  || description.toLowerCase() === "Sleet"  || description.toLowerCase() === "Shower Sleet"  || description.toLowerCase() === "Light Shower Sleet" || description.toLowerCase() === "Rain and snow"  || description.toLowerCase() === "Light Rain and snow"  || description.toLowerCase() === "Shower snow"  || description.toLowerCase() === "Light shower snow" || description.toLowerCase() === "Heavy shower snow"  || description.toLowerCase() === "freezing rain") {
     weatherIcon.innerHTML = `<i class="far fa-snowflake"></i>`
   }
    if(description.toLowerCase() === "thunderstorm with light rain" || description.toLowerCase() === "thunderstorm with rain" || description.toLowerCase() === "thunderstorm with heavy rain"  || description.toLowerCase() === "light thunderstorm"  || description.toLowerCase() === "thunderstorm"  || description.toLowerCase() === "heavy thunderstorm" || description.toLowerCase() === "ragged thunderstorm"  || description.toLowerCase() === "thunderstorm with drizzle"  || description.toLowerCase() === "thunderstorm with light drizzle"  || description.toLowerCase() === "thunderstorm with heavy drizzle") {
@@ -153,8 +161,8 @@ function displayForecast(response) {
 }
 function getWeatherData(city) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-  axios.get(`${apiUrl}&appid=${apiKey}`).then(showTemperature);
 
+  axios.get(`${apiUrl}&appid=${apiKey}`).then(showTemperature);
   // add forecast
       aipUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
       axios.get(apiUrl).then(displayForecast);
@@ -197,24 +205,48 @@ function search(event) {
 
 function changeCurrentActivity(response ) {
   let firstActivity = document.getElementById("first-activity");
+  let secondActivity = document.getElementById("second-activity");
+  let thirdActivity = document.getElementById("third-activity");
   let windSpeed= response.data.wind.speed;
   let hour = now.getHours();
-  let temperature = response.data.main.temp;
+  let temp = response.data.main.temp;
   let description = response.data.weather[0].main;
-  let rain = response.data.rain["1h"] || 0;
-  let snow = response.data.snow["1h"] || 0;
+  let rain;
+  let snow;
+
+  response.data.rain ? rain = response.data.rain["1h"] : rain = 0;
+
+  response.data.snow ?snow =  response.data.snow["1h"] : snow = 0; 
+
 
   console.log("test");
   if (windSpeed >= 12 && windSpeed < 19 && temp > 8 && hour < 17 && rain === 0 && snow === 0) {
-    firstActivity.innerHTML = `<i class="fas fa-wind"></i>Kite Rise`
+    firstActivity.innerHTML = `<i class="fas fa-wind"></i> Kite Rise`
   }
   if (windSpeed < 12 && temp > 5 && hour < 17 && rain === 0 && snow === 0) {
-    firstActivity.innerHTML = `<i class="fas fa-hiking"></i>Hiking`
+    firstActivity.innerHTML = `<i class="fas fa-hiking"></i> Hiking`
   }
-  if (windSpeed > 12 || temp <5 || hours > 19 || snow != 0 || rain != 0) {
- firstActivity.innerHTML = `<i class="fas fa-film"></i>Cinema`
+  if (windSpeed > 19 || temp <5 || hours > 19 || snow != 0 || rain != 0) {
+ firstActivity.innerHTML = `<i class="fas fa-film"></i> Cinema`
   }
-
+if (temp < -2 && rain === 0 && hours <20 || snow != 0 ) {
+  secondActivity.innerHTML = `<i class="fas fa-skating"></i> Ice Skating`
+}
+ if (windSpeed < 12 && temp > 5 && hours < 17 && rain === 0 && snow === 0) {
+   secondActivity.innerHTML = ` <i class="fas fa-tree"></i> Visit a park`
+ }
+ if (windSpeed > 19 || hours > 20 || rain != 0){
+    secondActivity.innerHTML = `<i class="fas fa-glass-martini-alt"></i> Visit a bar`
+ }
+ if (temp > 20 && rain === 0 && hours < 20) {
+   thirdActivity.innerHTML = `<i class="fas fa-swimmer"></i> Go swimming`
+ }
+   if (temp < 0 && snow != 0 && hours < 20) {
+     thirdActivity.innerHTML = `<i class="fas fa-sleigh"></i> Go sledding`
+ }
+ if (temp < 5) {
+        thirdActivity.innerHTML = `<i class="fas fa-hot-tub"></i> Go to sauna`
+ }
 }
 
 getCurrentPosition();
