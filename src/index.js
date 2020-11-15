@@ -1,14 +1,47 @@
-// querySelector also alle HTMLs die verändern werden können
+// alle Variablen
+let apiKey = "253bd9295ef9652dbc68aaa1df131546";
+let temperature = null;
+let now = new Date();
+let hours = now.getHours();
+let minutes = now.getMinutes();
+if (hours < 10) {
+  hours = `0${hours}`;
+}
+if (minutes < 10) {
+  minutes = `0${minutes}`;
+}
+let days = 
+[
+  "SUNDAY", 
+  "MONDAY", 
+  "TUESDAY", 
+  "WEDNESDAY", 
+  "THURSDAY", 
+  "FRIDAY", 
+  "SATURDAYX"
+];
+let day = days[now.getDay()];
 
+// HTML Komponenten
+let locationButton = document.getElementById("location-button-id");
+let celsiusLink = document.querySelector("#celsius-link");
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+let form = document.querySelector("#search-form");
+let searchInput = document.querySelector("#search-text-input");
+let h5 = document.querySelector("h5");
 
+h5.innerHTML = `${day} ${hours}:${minutes}h`
 
-
-
-// alle funktionen
+// addEventListener
+locationButton.addEventListener("click", getCurrentPosition);
+form.addEventListener("submit", search);
+celsiusLink.addEventListener("click", convertToCelsius);
+fahrenheitLink.addEventListener("click", convertToFahrenheit);
 document.getElementById("london").addEventListener("click", showLondonWeather);
 document.getElementById("tokyo").addEventListener("click", showTokyoWeather);
 document.getElementById("bamberg").addEventListener("click", showBambergWeather);
 document.getElementById("tallinn").addEventListener("click", showTallinnWeather);
+
 
 function showLondonWeather(event) {
  let city = "london";
@@ -89,13 +122,6 @@ function getCurrentPosition(event) {
   navigator.geolocation.getCurrentPosition(showPosition);
 } 
 
-let locationButton = document.getElementById("location-button-id");
-
-locationButton.addEventListener("click", getCurrentPosition);
-
-let apiKey = "253bd9295ef9652dbc68aaa1df131546";
-
-
 function showTemperature(response) {
   document.querySelector("h2").innerHTML =  response.data.name;
 
@@ -110,17 +136,24 @@ function showTemperature(response) {
   console.log(response)
   document.getElementById("humidity").innerHTML = response.data.main.humidity;
   document.getElementById("wind").innerHTML = Math.round(response.data.wind.speed);
-  if (response.data.precipitation) {
-    document.getElementById("precip").innerHTML = Math.round(response.data.wind.precipitation);
+  if (response.data.rain) {
+    document.getElementById("precipitation").innerHTML = parseFloat(response.data.rain["1h"])*100;
+  }
+  if(response.data.snow) {
+    document.getElementById("precipitation").innerHTML = parseFloat(response.data.snow["1h"])*100;
   }
 }
-//let city = "London"
-//document.querySelector("h2").innerHTML = city.toUpperCase();
-getCurrentPosition();
 
+function displayForecast(response) {
+  console.log(responsa.data);
+}
 function getWeatherData(city) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   axios.get(`${apiUrl}&appid=${apiKey}`).then(showTemperature);
+
+  // add forecast
+      aipUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIkey}&units=metric`;
+      axios.get(apiUrl).then(displayForecast);
 }
 
 function convertToFahrenheit(event) {
@@ -130,8 +163,6 @@ function convertToFahrenheit(event) {
   temperature = Number(temperature);
   temperatureElement.innerHTML = Math.round((temperature * 9) / 5 + 32);
 };
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", convertToFahrenheit);
 
 function convertToCelsius(event) {
   event.preventDefault();
@@ -142,58 +173,26 @@ function convertToCelsius(event) {
   temperatureElement.innerHTML = Math.round(((temperature - 32) * 5) / 9);
 }
 
-let celsiusLink = document.querySelector("#celsius-link");
-celsiusLink.addEventListener("click", convertToCelsius);
-
-
-function search(event) 
-{
+function search(event) {
   event.preventDefault();
   let searchInput = document.querySelector("#search-text-input");
   let h2 = document.querySelector("h2");
-  if (searchInput.value) 
-    {
-  h2.innerHTML = `${searchInput.value}`.toUpperCase();
-  let city = searchInput.value
-  console.log("test", city)
-  console.log(city)
-  getWeatherData(city); 
-  
-    } 
-else 
-    {
-  alert ("Enter a city");
-    }
+  if (searchInput.value) {
+    h2.innerHTML = `${searchInput.value}`.toUpperCase();
+    let city = searchInput.value
+    console.log("test", city)
+    console.log(city)
+    getWeatherData(city); 
+  } else {
+    alert ("Enter a city");
+  }
 }
 
-
-let form = document.querySelector("#search-form");
-let searchInput = document.querySelector("#search-text-input");
-
-
-form.addEventListener("submit", search);
-
-let now = new Date();
-let h5 = document.querySelector("h5");
-let hours = now.getHours();
-if (hours < 10) {
-  hours = `0${hours}`;
+function changeCurrentActivity () {
+  let firstActivity = document.getElementById("first-activity");
+  if (wind < 12 && wind < 19 && description === 0) {
+    firstActivity.innerHTML = `Kite Rise`
+  }
 }
-let minutes = now.getMinutes();
-if (minutes < 10) {
-  minutes = `0${minutes}`;
-}
-let days = 
-[
-  "SUNDAY", 
-  "MONDAY", 
-  "TUESDAY", 
-  "WEDNESDAY", 
-  "THURSDAY", 
-  "FRIDAY", 
-  "SATURDAYX"
-];
-let day = days[now.getDay()];
 
-h5.innerHTML = `${day} ${hours}:${minutes}h`
-
+getCurrentPosition();

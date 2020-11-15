@@ -95,6 +95,8 @@ a {
 }
 a:hover {
   color: #07689f;
+  text-decoration: none;
+  cursor: default;
 }
 .weather-searchbar {
   display: flex;
