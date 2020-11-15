@@ -145,6 +145,7 @@ function showTemperature(response) {
   else {
     document.getElementById("precipitation").innerHTML = "0";
   }
+  changeCurrentActivity(response)
 }
 
 function displayForecast(response) {
@@ -157,7 +158,10 @@ function getWeatherData(city) {
   // add forecast
       aipUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
       axios.get(apiUrl).then(displayForecast);
+
 }
+
+//Fahrenhit / Celsius Converter
 
 function convertToFahrenheit(event) {
   event.preventDefault();
@@ -175,7 +179,7 @@ function convertToCelsius(event) {
   temperature = Number(temperature); 
   temperatureElement.innerHTML = Math.round(((temperature - 32) * 5) / 9);
 }
-
+// Suchfeld
 function search(event) {
   event.preventDefault();
   let searchInput = document.querySelector("#search-text-input");
@@ -191,14 +195,33 @@ function search(event) {
   }
 }
 
-function changeCurrentActivity () {
+function changeCurrentActivity(response ) {
   let firstActivity = document.getElementById("first-activity");
-  if (wind < 12 && wind < 19 && snow === 0 && rain === 0) {
-    firstActivity.innerHTML = ` <i class="fas fa-wind">"Kite Rise"`
+  let windSpeed= response.data.wind.speed;
+  let hour = now.getHours();
+  let temperature = response.data.main.temp;
+  let description = response.data.weather[0].main;
+  let rain = response.data.rain["1h"] || 0;
+  let snow = response.data.snow["1h"] || 0;
+
+  console.log("test");
+  if (windSpeed >= 12 && windSpeed < 19 && temp > 8 && hour < 17 && rain === 0 && snow === 0) {
+    firstActivity.innerHTML = `<i class="fas fa-wind"></i>Kite Rise`
   }
-  if (description === "clear sky" || description === "scattered clouds" || description === "light clouds" && temperature > 10 && hours > 17) {
-    firstActivity.innerHTML = `  <i class="fas fa-hiking"></i>"Hiking"`
+  if (windSpeed < 12 && temp > 5 && hour < 17 && rain === 0 && snow === 0) {
+    firstActivity.innerHTML = `<i class="fas fa-hiking"></i>Hiking`
   }
+  if (windSpeed > 12 || temp <5 || hours > 19 || snow != 0 || rain != 0) {
+ firstActivity.innerHTML = `<i class="fas fa-film"></i>Cinema`
+  }
+
 }
 
 getCurrentPosition();
+
+//  }
+//  if (response.data.description.toLowerCase() === "clear sky" || response.description.toLowerCase() === "scattered clouds" || response.data.description.toLowerCase() === "broken clouds"  || description.toLowerCase === "overcast clouds" && temperature > 10 && hours > 17) {
+//    firstActivity.innerHTML = `<i class="fas fa-hiking"></i>Hiking`
+//  }
+//  else {
+//  }
