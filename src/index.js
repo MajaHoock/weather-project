@@ -139,20 +139,23 @@ function showTemperature(response) {
   if (response.data.rain) {
     document.getElementById("precipitation").innerHTML = parseFloat(response.data.rain["1h"])*100;
   }
-  if(response.data.snow) {
+  else if(response.data.snow) {
     document.getElementById("precipitation").innerHTML = parseFloat(response.data.snow["1h"])*100;
+  }
+  else {
+    document.getElementById("precipitation").innerHTML = "0";
   }
 }
 
 function displayForecast(response) {
-  console.log(responsa.data);
+  console.log(response.data);
 }
 function getWeatherData(city) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   axios.get(`${apiUrl}&appid=${apiKey}`).then(showTemperature);
 
   // add forecast
-      aipUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIkey}&units=metric`;
+      aipUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
       axios.get(apiUrl).then(displayForecast);
 }
 
@@ -190,8 +193,11 @@ function search(event) {
 
 function changeCurrentActivity () {
   let firstActivity = document.getElementById("first-activity");
-  if (wind < 12 && wind < 19 && description === 0) {
-    firstActivity.innerHTML = `Kite Rise`
+  if (wind < 12 && wind < 19 && snow === 0 && rain === 0) {
+    firstActivity.innerHTML = ` <i class="fas fa-wind">"Kite Rise"`
+  }
+  if (description === "clear sky" || description === "scattered clouds" || description === "light clouds" && temperature > 10 && hours > 17) {
+    firstActivity.innerHTML = `  <i class="fas fa-hiking"></i>"Hiking"`
   }
 }
 
