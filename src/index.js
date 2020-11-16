@@ -157,19 +157,42 @@ function showTemperature(response) {
 }
 
 function displayForecast(response) {
-  console.log(response.data);
+  let fiveDayForecast = generateWeekForecast(response);
+  document.getElementById("first-day").innerHTML = fiveDayForecast[0].day;
+  document.getElementById("first-temp").innerHTML = Math.round(fiveDayForecast[0].temp);
+  document.getElementById("second-day").innerHTML = fiveDayForecast[1].day;
+  document.getElementById("second-temp").innerHTML = Math.round(fiveDayForecast[1].temp);
+  document.getElementById("third-day").innerHTML = fiveDayForecast[2].day;
+  document.getElementById("third-temp").innerHTML = Math.round(fiveDayForecast[2].temp);
+  document.getElementById("fourth-day").innerHTML = fiveDayForecast[3].day;
+  document.getElementById("fourth-temp").innerHTML = Math.round(fiveDayForecast[3].temp);
+  document.getElementById("fifth-day").innerHTML = fiveDayForecast[4].day;
+  document.getElementById("fifth-temp").innerHTML = Math.round(fiveDayForecast[4].temp);
 }
+
+function generateWeekForecast(forecastResponse) {
+  fiveDayForecast = forecastResponse.data.list;
+  let week = [];
+
+  for (i = 0;  i < fiveDayForecast.length; i++) {
+    if(i%8 === 0) {
+      week.push({day: fiveDayForecast[i].dt_txt, temp: fiveDayForecast[i].main.temp});
+    }
+  }
+
+  return week;
+}
+
 function getWeatherData(city) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
   axios.get(`${apiUrl}&appid=${apiKey}`).then(showTemperature);
   // add forecast
-      aipUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
-      axios.get(apiUrl).then(displayForecast);
-
+  let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
+  axios.get(forecastUrl).then(displayForecast);
 }
 
-//Fahrenhit / Celsius Converter
+//Fahrenheit / Celsius Converter
 
 function convertToFahrenheit(event) {
   event.preventDefault();
@@ -196,7 +219,6 @@ function search(event) {
     h2.innerHTML = `${searchInput.value}`.toUpperCase();
     let city = searchInput.value
     console.log("test", city)
-    console.log(city)
     getWeatherData(city); 
   } else {
     alert ("Enter a city");
@@ -218,8 +240,6 @@ function changeCurrentActivity(response ) {
 
   response.data.snow ?snow =  response.data.snow["1h"] : snow = 0; 
 
-
-  console.log("test");
   if (windSpeed >= 12 && windSpeed < 19 && temp > 8 && hour < 17 && rain === 0 && snow === 0) {
     firstActivity.innerHTML = `<i class="fas fa-wind"></i> Kite Rise`
   }
