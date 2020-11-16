@@ -63,6 +63,9 @@ function showTallinnWeather(event) {
 function showPosition(position) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`
   axios.get(`${apiUrl}&appid=${apiKey}`).then(weatherDataBasedOnLatLon);
+  //get 5 days forecast
+  let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
+  axios.get(forecastUrl).then(displayForecast);
 }
 
 function weatherDataBasedOnLatLon(response) {
@@ -158,16 +161,16 @@ function showTemperature(response) {
 
 function displayForecast(response) {
   let fiveDayForecast = generateWeekForecast(response);
-  document.getElementById("first-day").innerHTML = fiveDayForecast[0].day;
-  document.getElementById("first-temp").innerHTML = Math.round(fiveDayForecast[0].temp);
-  document.getElementById("second-day").innerHTML = fiveDayForecast[1].day;
-  document.getElementById("second-temp").innerHTML = Math.round(fiveDayForecast[1].temp);
-  document.getElementById("third-day").innerHTML = fiveDayForecast[2].day;
-  document.getElementById("third-temp").innerHTML = Math.round(fiveDayForecast[2].temp);
-  document.getElementById("fourth-day").innerHTML = fiveDayForecast[3].day;
-  document.getElementById("fourth-temp").innerHTML = Math.round(fiveDayForecast[3].temp);
-  document.getElementById("fifth-day").innerHTML = fiveDayForecast[4].day;
-  document.getElementById("fifth-temp").innerHTML = Math.round(fiveDayForecast[4].temp);
+  document.getElementById("first-day").innerHTML = new Date(fiveDayForecast[0].day.substr(0, 10)).toLocaleDateString("en-EN", { weekday: "short" }); 
+  document.getElementById("first-temp").innerHTML = `${Math.round(fiveDayForecast[0].temp)}° C`;
+  document.getElementById("second-day").innerHTML = new Date(fiveDayForecast[1].day.substr(0, 10)).toLocaleDateString("en-En", {weekday: "short"});
+  document.getElementById("second-temp").innerHTML = `${Math.round(fiveDayForecast[1].temp)}° C`;
+  document.getElementById("third-day").innerHTML = new Date(fiveDayForecast[2].day.substr(0, 10)).toLocaleDateString("en-En", {weekday: "short"});
+  document.getElementById("third-temp").innerHTML = `${Math.round(fiveDayForecast[2].temp)}° C`;
+  document.getElementById("fourth-day").innerHTML = new Date(fiveDayForecast[3].day.substr(0, 10)).toLocaleDateString("en-En", {weekday: "short"});
+  document.getElementById("fourth-temp").innerHTML = `${Math.round(fiveDayForecast[3].temp)}° C`;
+  document.getElementById("fifth-day").innerHTML = new Date(fiveDayForecast[4].day.substr(0, 10)).toLocaleDateString("en-En", {weekday: "short"});
+  document.getElementById("fifth-temp").innerHTML = `${Math.round(fiveDayForecast[4].temp)}° C`;
 }
 
 function generateWeekForecast(forecastResponse) {
@@ -185,7 +188,6 @@ function generateWeekForecast(forecastResponse) {
 
 function getWeatherData(city) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
   axios.get(`${apiUrl}&appid=${apiKey}`).then(showTemperature);
   // add forecast
   let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
