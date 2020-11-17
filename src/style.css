@@ -198,11 +198,11 @@ hr {
 
 .conditions {
   position: relative;
-  left: 240px;
+  right: 22px;
   color: #07689f;
   font-size: 22px;
   list-style: none;
-  max-height: 180px;
+  max-height: 350px;
   width: 250px;
   text-align: center;
   background-color: rgb(162, 213, 242, 0.5);
