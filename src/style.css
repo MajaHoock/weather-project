@@ -133,7 +133,7 @@ input,
   height: 600px;
   position: relative;
   left: 25px;
-  width: 300px;
+  width: 250px;
   padding-top: 0px;
   padding-left: 0px;
   background-color: rgb(162, 213, 242, 0.5);
@@ -179,7 +179,7 @@ hr {
   font-weight: bolder;
   text-align: center;
   position: relative;
-  left: 60px;
+  left: 22px;
   margin-left: 16px;
   border: solid;
   background-color: rgb(162, 213, 242, 0.5);
@@ -200,7 +200,7 @@ hr {
 
 .conditions {
   position: relative;
-  right: 22px;
+  right: 25px;
   top: 190px;
   color: #07689f;
   font-size: 22px;
@@ -213,21 +213,7 @@ hr {
   border-width: thin;
   border-radius: 15px;
 }
-.todays-activities {
-  position: relative;
-  top: 300px;
-  color: #07689f;
-  font-size: 22px;
-  list-style: none;
-  border: solid;
-  background-color: rgb(162, 213, 242, 0.5);
-  max-height: 180px;
-  width: 250px;
-  text-align: center;
-  border-width: thin;
-  border-color: rgb(162, 213, 242, 0.5);
-  border-radius: 15px;
-}
+
 hr {
   height: 12px;
 }
@@ -245,12 +231,17 @@ li {
 }
 
 .footer {
-}
-
-.githubLink {
   display: flex;
-  font-size: 22px;
-  color: #07689f;
+  font-size: 18px;
   display: block;
-  text-align: center;
+}
+.githubLink,
+.portfolioLink {
+  color: #07689f;
+  text-decoration: none;
+}
+.githubLink:hover,
+.portfolioLink:hover {
+  cursor: pointer;
+  color: #ffc93c;
 }

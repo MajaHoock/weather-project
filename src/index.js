@@ -40,7 +40,7 @@ fahrenheitLink.addEventListener("click", convertToFahrenheit);
 document.getElementById("london").addEventListener("click", showLondonWeather);
 document.getElementById("tokyo").addEventListener("click", showTokyoWeather);
 document.getElementById("bamberg").addEventListener("click", showBambergWeather);
-document.getElementById("tallinn").addEventListener("click", showTallinnWeather);
+document.getElementById("sydney").addEventListener("click", showSydneyWeather);
 
 
 function showLondonWeather(event) {
@@ -55,8 +55,8 @@ function showBambergWeather(event) {
  let city = "bamberg";
  getWeatherData(city); 
 }
-function showTallinnWeather(event) {
- let city = "tallinn";
+function showSydneyWeather(event) {
+ let city = "sydney";
  getWeatherData(city); 
 }
 
