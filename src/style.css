@@ -103,7 +103,7 @@ a:hover {
   align-items: center;
   justify-content: center;
   margin-top: 24px;
-  margin-bottom: 100px;
+  margin-bottom: 40px;
 }
 form {
   text-align: center;
@@ -134,7 +134,7 @@ input,
   position: relative;
   left: 25px;
   width: 300px;
-  padding-top: 20px;
+  padding-top: 0px;
   padding-left: 0px;
   background-color: rgb(162, 213, 242, 0.5);
   border: solid;
@@ -188,17 +188,20 @@ hr {
   border-radius: 10px;
 }
 .today,
-.header-activity {
+.header-activity,
+.forecast-days {
   color: #07689f;
   text-shadow: 0.5px 0.5px 0.6px #208dcc;
   font-size: 22px;
   text-shadow: rgba(0, 0, 0, 0.4);
   background: rgb(255, 201, 60, 0.5);
+  text-align: center;
 }
 
 .conditions {
   position: relative;
   right: 22px;
+  top: 190px;
   color: #07689f;
   font-size: 22px;
   list-style: none;
