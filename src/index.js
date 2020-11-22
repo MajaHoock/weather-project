@@ -94,6 +94,7 @@ function weatherDataBasedOnLatLon(response) {
   }
   
   changeCurrentActivity(response)
+  //changeForecastActivity(response);
 }
 
 // Main Weather Emoji (current) 
@@ -299,6 +300,51 @@ if (temp < -2 && rain === 0 && hours <20 || snow != 0 ) {
  }
 }
 
+function changeForecastActivity(response) {
+  console.log(response)
+  let firstForecastActivity = document.getElementById("first-forecast-activity");
+  let secondForecastActivity = document.getElementById("second-forecast-activity");
+  let thirdForecastActivity = document.getElementById("third-forecast-activity");
+  let fourthForecastActivity = document.getElementById("fourth-forecast-activity");
+  let fifthForecastActivity = document.getElementById("fifth-forecast-activity");
+  //let windSpeed= response.data.wind.speed;
+  let hours = now.getHours();
+  let temp = response.data.main.temp;
+  let description = response.data.weather[0].main;
+  let rain;
+  let snow;
+
+  response.data.rain ? rain = response.data.rain["1h"] : rain = 0;
+  response.data.snow ?snow =  response.data.snow["1h"] : snow = 0; 
+
+  if (windSpeed >= 12 && windSpeed < 19 && temp > 8 && hours < 17 && rain === 0 && snow === 0) {
+    firstForecastActivity.innerHTML = `<i class="fas fa-wind"></i> Kite Rise`
+  }
+  if (windSpeed < 12 && temp > 5 && hours < 17 && rain === 0 && snow === 0) {
+    firstForecastActivity.innerHTML = `<i class="fas fa-hiking"></i> Hiking`
+  }
+  if (windSpeed > 19 || temp <5 || hours > 19 || snow != 0 || rain != 0) {
+ firstForecastActivity.innerHTML = `<i class="fas fa-film"></i> Cinema`
+  }
+if (temp < -2 && rain === 0 && hours <20 || snow != 0 ) {
+  secondForecastActivity.innerHTML = `<i class="fas fa-skating"></i> Ice Skating`
+}
+ if (windSpeed < 12 && temp > 5 && hours < 17 && rain === 0 && snow === 0) {
+   secondForecastActivity.innerHTML = ` <i class="fas fa-tree"></i> Visit a park`
+ }
+ if (windSpeed > 19 || hours > 20 || rain != 0){
+    secondForecastActivity.innerHTML = `<i class="fas fa-glass-martini-alt"></i> Visit a bar`
+ }
+ if (temp > 20 && rain === 0 && hours < 20) {
+   thirdForecastActivity.innerHTML = `<i class="fas fa-swimmer"></i> Go swimming`
+ }
+   if (temp < 0 && snow != 0 && hours < 20) {
+     thirdForecastActivity.innerHTML = `<i class="fas fa-sleigh"></i> Go sledding`
+ }
+ if (temp < 5 || snow != 0 || rain != 0) {
+      thirdForecastActivity.innerHTML = `<i class="fas fa-hot-tub"></i> Go to sauna`
+ }
+}
 getCurrentPosition();
 
 //  }
