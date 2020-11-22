@@ -94,7 +94,7 @@ function weatherDataBasedOnLatLon(response) {
   }
   
   changeCurrentActivity(response)
-  //changeForecastActivity(response);
+  changeForecastActivity(response);
 }
 
 // Main Weather Emoji (current) 
@@ -307,7 +307,7 @@ function changeForecastActivity(response) {
   let thirdForecastActivity = document.getElementById("third-forecast-activity");
   let fourthForecastActivity = document.getElementById("fourth-forecast-activity");
   let fifthForecastActivity = document.getElementById("fifth-forecast-activity");
-  //let windSpeed= response.data.wind.speed;
+  let windSpeed= response.data.wind.speed;
   let hours = now.getHours();
   let temp = response.data.main.temp;
   let description = response.data.weather[0].main;
