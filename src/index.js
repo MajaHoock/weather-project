@@ -171,6 +171,19 @@ function displayForecast(response) {
   document.getElementById("fourth-temp").innerHTML = `${Math.round(fiveDayForecast[3].temp)}° C`;
   document.getElementById("fifth-day").innerHTML = new Date(fiveDayForecast[4].day.substr(0, 10)).toLocaleDateString("en-En", {weekday: "short"});
   document.getElementById("fifth-temp").innerHTML = `${Math.round(fiveDayForecast[4].temp)}° C`;
+  console.log(response)
+
+  let firstIconUrl = "http://openweathermap.org/img/w/" + fiveDayForecast[0].icon + ".png";
+  let firstIconElement = document.querySelector("#first-icon");
+
+  let secondIconElement = document.querySelector("#second-icon");
+  let thirdIconElement = document.querySelector("#third-icon");
+  let fourthIconElement = document.querySelector("#fourth-icon");
+  let fifthIconElement = document.querySelector("#fifth-icon");
+
+  console.log(firstIconElement);
+  firstIconElement.setAttribute("src", firstIconUrl);
+
 }
 
 function generateWeekForecast(forecastResponse) {
@@ -179,7 +192,9 @@ function generateWeekForecast(forecastResponse) {
 
   for (i = 0;  i < fiveDayForecast.length; i++) {
     if(i%8 === 0) {
-      week.push({day: fiveDayForecast[i].dt_txt, temp: fiveDayForecast[i].main.temp});
+      week.push({day: fiveDayForecast[i].dt_txt,
+                         temp: fiveDayForecast[i].main.temp,
+                         icon: fiveDayForecast[i].weather[0].icon});
     }
   }
 
