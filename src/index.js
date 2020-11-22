@@ -1,4 +1,4 @@
-// alle Variablen
+// Variablen
 let apiKey = "253bd9295ef9652dbc68aaa1df131546";
 let temperature = null;
 let now = new Date();
@@ -42,6 +42,9 @@ document.getElementById("tokyo").addEventListener("click", showTokyoWeather);
 document.getElementById("bamberg").addEventListener("click", showBambergWeather);
 document.getElementById("sydney").addEventListener("click", showSydneyWeather);
 
+// Funktionen
+
+// Header Weather on click
 
 function showLondonWeather(event) {
  let city = "london";
@@ -59,6 +62,8 @@ function showSydneyWeather(event) {
  let city = "sydney";
  getWeatherData(city); 
 }
+
+// Position based data 
 
 function showPosition(position) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`
@@ -91,6 +96,8 @@ function weatherDataBasedOnLatLon(response) {
   
   changeCurrentActivity(response)
 }
+
+// Main Weather Emoji (current) 
 
 function iconChangeHandler(description) {
 let weatherIcon = document.getElementById("header-emoji");
@@ -159,6 +166,8 @@ function showTemperature(response) {
   changeCurrentActivity(response)
 }
 
+// 5 Day Forecast 
+
 function displayForecast(response) {
   let fiveDayForecast = generateWeekForecast(response);
   document.getElementById("first-day").innerHTML = new Date(fiveDayForecast[0].day.substr(0, 10)).toLocaleDateString("en-EN", { weekday: "short" }); 
@@ -173,16 +182,23 @@ function displayForecast(response) {
   document.getElementById("fifth-temp").innerHTML = `${Math.round(fiveDayForecast[4].temp)}° C`;
   console.log(response)
 
-  let firstIconUrl = "http://openweathermap.org/img/w/" + fiveDayForecast[0].icon + ".png";
+  let firstIconUrl = "http://openweathermap.org/img/wn/" + fiveDayForecast[0].icon + ".png";
   let firstIconElement = document.querySelector("#first-icon");
-
+  let secondIconUrl = "http://openweathermap.org/img/wn/" + fiveDayForecast[1].icon + ".png";
   let secondIconElement = document.querySelector("#second-icon");
+  let thirdIconUrl = "http://openweathermap.org/img/wn/" + fiveDayForecast[2].icon + ".png";
   let thirdIconElement = document.querySelector("#third-icon");
+  let fourthIconUrl = "http://openweathermap.org/img/wn/" + fiveDayForecast[3].icon + ".png";
   let fourthIconElement = document.querySelector("#fourth-icon");
+  let fifthIconUrl = "http://openweathermap.org/img/wn/" + fiveDayForecast[4].icon + ".png";
   let fifthIconElement = document.querySelector("#fifth-icon");
 
   console.log(firstIconElement);
-  firstIconElement.setAttribute("src", firstIconUrl);
+  firstIconElement.setAttribute("src", `http://openweathermap.org/img`);
+  secondIconElement.setAttribute("src", `http://openweathermap.org/img`);
+  thirdIconElement.setAttribute("src", `http://openweathermap.org/img`);
+  fourthIconElement.setAttribute("src", `http://openweathermap.org/img`);
+  fifthIconElement.setAttribute("src", `http://openweathermap.org/img`);
 
 }
 
