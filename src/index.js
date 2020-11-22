@@ -171,15 +171,15 @@ function showTemperature(response) {
 function displayForecast(response) {
   let fiveDayForecast = generateWeekForecast(response);
   document.getElementById("first-day").innerHTML = new Date(fiveDayForecast[0].day.substr(0, 10)).toLocaleDateString("en-EN", { weekday: "short" }); 
-  document.getElementById("first-temp").innerHTML = `${Math.round(fiveDayForecast[0].temp)}° C`;
+  document.getElementById("first-temp").innerHTML = `<i class="fas fa-thermometer-three-quarters"></i> ${Math.round(fiveDayForecast[0].temp)}° C`;
   document.getElementById("second-day").innerHTML = new Date(fiveDayForecast[1].day.substr(0, 10)).toLocaleDateString("en-En", {weekday: "short"});
-  document.getElementById("second-temp").innerHTML = `${Math.round(fiveDayForecast[1].temp)}° C`;
+  document.getElementById("second-temp").innerHTML = `<i class="fas fa-thermometer-three-quarters"></i> ${Math.round(fiveDayForecast[1].temp)}° C`;
   document.getElementById("third-day").innerHTML = new Date(fiveDayForecast[2].day.substr(0, 10)).toLocaleDateString("en-En", {weekday: "short"});
-  document.getElementById("third-temp").innerHTML = `${Math.round(fiveDayForecast[2].temp)}° C`;
+  document.getElementById("third-temp").innerHTML = `<i class="fas fa-thermometer-three-quarters"></i> ${Math.round(fiveDayForecast[2].temp)}° C`;
   document.getElementById("fourth-day").innerHTML = new Date(fiveDayForecast[3].day.substr(0, 10)).toLocaleDateString("en-En", {weekday: "short"});
-  document.getElementById("fourth-temp").innerHTML = `${Math.round(fiveDayForecast[3].temp)}° C`;
+  document.getElementById("fourth-temp").innerHTML = `<i class="fas fa-thermometer-three-quarters"></i> ${Math.round(fiveDayForecast[3].temp)}° C`;
   document.getElementById("fifth-day").innerHTML = new Date(fiveDayForecast[4].day.substr(0, 10)).toLocaleDateString("en-En", {weekday: "short"});
-  document.getElementById("fifth-temp").innerHTML = `${Math.round(fiveDayForecast[4].temp)}° C`;
+  document.getElementById("fifth-temp").innerHTML = `<i class="fas fa-thermometer-three-quarters"></i> ${Math.round(fiveDayForecast[4].temp)}° C`;
 
 
   let firstIconUrl = "http://openweathermap.org/img/wn/" + fiveDayForecast[0].icon + ".png";
