@@ -94,7 +94,7 @@ function weatherDataBasedOnLatLon(response) {
   }
   
   changeCurrentActivity(response)
-  changeForecastActivity(response);
+
 }
 
 // Main Weather Emoji (current) 
@@ -198,18 +198,22 @@ function displayForecast(response) {
   thirdIconElement.setAttribute("src", thirdIconUrl);
   fourthIconElement.setAttribute("src", fourthIconUrl);
   fifthIconElement.setAttribute("src", fifthIconUrl);
-
+  changeForecastActivity(fiveDayForecast);
 }
 
 function generateWeekForecast(forecastResponse) {
   fiveDayForecast = forecastResponse.data.list;
   let week = [];
-
+console.log(forecastResponse)
   for (i = 0;  i < fiveDayForecast.length; i++) {
     if(i%8 === 0) {
       week.push({day: fiveDayForecast[i].dt_txt,
                          temp: fiveDayForecast[i].main.temp,
-                         icon: fiveDayForecast[i].weather[0].icon});
+                         windSpeed: fiveDayForecast[i].wind.speed,
+                         rain: fiveDayForecast[i].rain ? fiveDayForecast[i].rain["3h"] : 0,
+                         snow: fiveDayForecast[i].snow ? fiveDayForecast[i].snow["3h"] : 0,
+                         icon: fiveDayForecast[i].weather[0].icon},
+                         );
     }
   }
 
@@ -299,24 +303,60 @@ if (temp < -2 && rain === 0 && hours <20 || snow != 0 ) {
       thirdActivity.innerHTML = `<i class="fas fa-hot-tub"></i> Go to sauna`
  }
 }
+function getRandomNumber(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+}
 
-function changeForecastActivity(response) {
-  console.log(response)
+function generateActivityBasedOnForecast(day) {
+  let hours = now.getHours();
+
+  if(day.temp >12 && day.rain === 0 && day.snow === 0) {
+    let options = ["Hiking", "Visit a Park", "Climbing"]
+    let random = getRandomNumber(-1,2)
+     console.log(random)
+    return options[random]
+  }
+  if(day.temp <12 && day.temp > 0 && hours < 20 || day.rain != 0 || day.snow != 0) {
+     let options = ["Cinema", "Visit a Bar", "Sauna"]
+      let random =getRandomNumber(-1,2)
+      console.log(random)
+    return options[random]
+  }
+  if(day.temp < 5 && day.temp >3) {
+     let options = ["Book store", "Spa", "Museum"]
+     let random = getRandomNumber(-1,2)
+      console.log(random)
+    return options[random]
+  }
+  if(day.temp < 0 && day.rain === 0) {
+    let options = ["Ice Skating", "Indoor Pool", "Sledging"]
+    let random =getRandomNumber(-1,2)
+     console.log(random)
+    return options[random]
+  }
+  if(day.temp > 3 && day.wind.Speed > 10) {
+    let options = ["Kite Rise"]
+    let random = getRandomNumber(-1,2)
+     console.log(random)
+    return options[random]
+  }
+}
+
+function changeForecastActivity(fiveDays) {
+  console.log(fiveDays)
   let firstForecastActivity = document.getElementById("first-forecast-activity");
   let secondForecastActivity = document.getElementById("second-forecast-activity");
   let thirdForecastActivity = document.getElementById("third-forecast-activity");
   let fourthForecastActivity = document.getElementById("fourth-forecast-activity");
   let fifthForecastActivity = document.getElementById("fifth-forecast-activity");
-  let windSpeed= response.data.wind.speed;
-  let hours = now.getHours();
-  let temp = response.data.main.temp;
-  let description = response.data.weather[0].main;
-  let rain;
-  let snow;
 
-  response.data.rain ? rain = response.data.rain["1h"] : rain = 0;
-  response.data.snow ?snow =  response.data.snow["1h"] : snow = 0; 
-
+ firstForecastActivity.innerHTML = generateActivityBasedOnForecast(fiveDays[0]);
+ secondForecastActivity.innerHTML = generateActivityBasedOnForecast(fiveDays[1]);
+ thirdForecastActivity.innerHTML = generateActivityBasedOnForecast(fiveDays[2]);
+ fourthForecastActivity.innerHTML = generateActivityBasedOnForecast(fiveDays[3]);
+ fifthForecastActivity.innerHTML = generateActivityBasedOnForecast(fiveDays[4]);
+  
+/*
   if (windSpeed >= 12 && windSpeed < 19 && temp > 8 && hours < 17 && rain === 0 && snow === 0) {
     firstForecastActivity.innerHTML = `<i class="fas fa-wind"></i> Kite Rise`
   }
@@ -344,6 +384,10 @@ if (temp < -2 && rain === 0 && hours <20 || snow != 0 ) {
  if (temp < 5 || snow != 0 || rain != 0) {
       thirdForecastActivity.innerHTML = `<i class="fas fa-hot-tub"></i> Go to sauna`
  }
+  if (windSpeed < 10 && temp > 11 && rain === 0 && snow === 0) {
+    fourthForecastActivity.innerHTML = `<i class="fas fa-wind"></i> Climbing`
+  }
+*/  
 }
 getCurrentPosition();
 
