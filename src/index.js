@@ -302,41 +302,44 @@ if (temp < -2 && rain === 0 && hours <20 || snow != 0 ) {
  if (temp < 5 || snow != 0 || rain != 0) {
       thirdActivity.innerHTML = `<i class="fas fa-hot-tub"></i> Go to sauna`
  }
+ if (temp > 0 || snow === 0 || rain === 0) {
+   thirdActivity.innerHTML = `<i class="fas fa-walking"></i> Go for a run`
+ }
 }
 function getRandomNumber(min, max) {
-    return Math.round(Math.random() * (max - min) + min);
+    return Math.round(Math.random() * (max - min) + min)-1;
 }
 
 function generateActivityBasedOnForecast(day) {
   let hours = now.getHours();
 
   if(day.temp >12 && day.rain === 0 && day.snow === 0) {
-    let options = ["Hiking", "Visit a Park", "Climbing"]
-    let random = getRandomNumber(-1,2)
+    let options = ["Hiking", "Visit a Park", "Climbing", "Take a walk"]
+    let random = getRandomNumber(0,4)
      console.log(random)
     return options[random]
   }
   if(day.temp <12 && day.temp > 0 && hours < 20 || day.rain != 0 || day.snow != 0) {
-     let options = ["Cinema", "Visit a Bar", "Sauna"]
-      let random =getRandomNumber(-1,2)
+     let options = ["Cinema", "Visit a Bar", "Sauna", "Cozy café"]
+      let random =getRandomNumber(0,4)
       console.log(random)
     return options[random]
   }
   if(day.temp < 5 && day.temp >3) {
      let options = ["Book store", "Spa", "Museum"]
-     let random = getRandomNumber(-1,2)
+     let random = getRandomNumber(0,3)
       console.log(random)
     return options[random]
   }
   if(day.temp < 0 && day.rain === 0) {
     let options = ["Ice Skating", "Indoor Pool", "Sledging"]
-    let random =getRandomNumber(-1,2)
+    let random =getRandomNumber(0,3)
      console.log(random)
     return options[random]
   }
   if(day.temp > 3 && day.wind.Speed > 10) {
     let options = ["Kite Rise"]
-    let random = getRandomNumber(-1,2)
+    let random = getRandomNumber(0,3)
      console.log(random)
     return options[random]
   }
