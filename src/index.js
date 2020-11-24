@@ -35,8 +35,8 @@ h5.innerHTML = `${day} ${hours}:${minutes}h`
 // addEventListener
 locationButton.addEventListener("click", getCurrentPosition);
 form.addEventListener("submit", search);
-celsiusLink.addEventListener("click", convertToCelsius);
 fahrenheitLink.addEventListener("click", convertToFahrenheit);
+
 document.getElementById("london").addEventListener("click", showLondonWeather);
 document.getElementById("tokyo").addEventListener("click", showTokyoWeather);
 document.getElementById("bamberg").addEventListener("click", showBambergWeather);
@@ -236,6 +236,8 @@ function convertToFahrenheit(event) {
   let temperature = temperatureElement.innerHTML;
   temperature = Number(temperature);
   temperatureElement.innerHTML = Math.round((temperature * 9) / 5 + 32);
+  fahrenheitLink.removeEventListener("click", convertToFahrenheit);
+  celsiusLink.addEventListener("click", convertToCelsius);
 };
 
 function convertToCelsius(event) {
@@ -245,6 +247,8 @@ function convertToCelsius(event) {
    console.log(temperature) 
   temperature = Number(temperature); 
   temperatureElement.innerHTML = Math.round(((temperature - 32) * 5) / 9);
+  celsiusLink.removeEventListener("click", convertToCelsius);
+  fahrenheitLink.addEventListener("click", convertToFahrenheit);
 }
 // Suchfeld
 function search(event) {
